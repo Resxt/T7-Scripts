@@ -17,14 +17,14 @@ All these features can easily be customized by editing the GSH file provided
 Drag and drop the files in `Call of Duty Black Ops III\share\raw\scripts\zm\_resxt`  
 Create any missing folder
 
-In your [zone file](./README.md#zone-file) add these lines
+In your [zone file](../README.md#zone-file) add these lines
 
 ```c
 scriptparsetree,scripts/zm/_resxt/_ending.gsc
 scriptparsetree,scripts/zm/_resxt/_ending.gsh
 ```
 
-In your [mapname GSC](./README.md#glossary) file add these lines
+In your [mapname GSC](../README.md#glossary) file add these lines
 
 ```c
 #using scripts\zm\_resxt\_ending;
@@ -33,10 +33,10 @@ In your [mapname GSC](./README.md#glossary) file add these lines
 
 ## Script setup
 
-Open the [GSH file](./README.md#glossary), review and edit the values.  
+Open the [GSH file](../README.md#glossary), review and edit the values.  
 Make sure to read [Customization](#customization) to not misconfigure anything.  
 
-In your map's [STR file](./README.md#localized-strings) add entries for the hintstring(s) you will use.  
+In your map's [STR file](../README.md#localized-strings) add entries for the hintstring(s) you will use.  
 Make sure to edit the GSH file accordingly.  
 Below is an example of what you can add to your STR file.  
 
@@ -48,7 +48,7 @@ REFERENCE      ENDING_DISABLED_HINTSTRING
 LANG_ENGLISH      "You can't espace yet.."
 ```
 
-[Precache](./README.md#precaching) all the hintstrings that will be used in your mapname GSC.  
+[Precache](../README.md#precaching) all the hintstrings that will be used in your mapname GSC.  
 Below is an example where the base cost is `10000`, the per player cost is `5000` and players can pay `5000` to contribute.  
 `10000 + (5000 * 4 players)` would lead to `30000`, plus I added all values that are a multiply of `5000` below `30000` to make up for any potential scenario, both less than 4 players and players paying `5000` per `5000`.  
 I also added the disabled hintstring because I want to show an hintstring before the ending is available for purchase.  

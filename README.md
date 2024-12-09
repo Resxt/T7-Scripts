@@ -5,7 +5,8 @@
 ## What is this?
 
 This is a collection of Call of Duty Black Ops III (T7/BO3) scripts I created, written in [GSC](https://plutonium.pw/docs/modding/gsc/).  
-I decided to start polishing and sharing some of my scripts to help other modders implement features into their map since some scripts/features are hard to find online or are not really good scripts mainly due to how old they are.
+I decided to start polishing and sharing some of my scripts to help other modders implement features into their map since some scripts/features are hard to find online or are not really good scripts mainly due to how old they are.  
+I also included some tutorials/explanations for some concepts such as the zone file and precaching to help you make use of my scripts more easily (and improve your knowledge overall as well).  
 
 Huge thanks to everyone who helped me learn GSC originally for other CODs: Birchy, DoktorSAS, FutureRave among others.  
 Also a massive thanks to everyone that made me learn a ton of things on BO3: serious, Rayjiun, Vertasea, Shidouri, Scworppy among others.  
@@ -42,3 +43,81 @@ Note that you can also look at the files in your BO3 folder `share\raw\scripts`,
 
 I highly recommend joining both of the Discord servers listed at the top of this README to get help with scripting if you're learning.  
 You can also ping me there if you're in need of help with one of my script.  
+
+## Zone file
+
+The zone file is where you include assets for the game to load for your map.  
+It won't run scripts on its own, it's only used to make assets available to use/loaded.  
+When using a script that's not included in the base game, such as mine, you need to add them to the zone file to make the game load them.  
+You can then start using them in GSC/CSC by adding `#using` lines for GSC and CSC scripts, or `#insert` lines for GSH files in your script
+
+The same principle applies for a lot of other things such as models.  
+If a model is in your map already, in Radiant, then it's loaded.  
+If it's not and you want to use that model through script then you need to add it to the zone file.  
+
+To access your map's zone file you can do one of these:
+
+- Right click on your map in ModTools and click on `Edit Zone file`
+- Go to `Call of Duty Black Ops III\usermaps\YOUR_MAPNAME\zone_source` (replace `YOUR_MAPNAME` with your map's name) and opening the zone file that has your map's name
+
+## Localized strings
+
+Localized strings are more advanced strings that allow for things like translating and [precaching](#precaching).  
+Changing your strings to localized strings is a good practice both to not make the game have a short freeze/lag (hitch) when first showing a string/hintstring, thanks to precaching, and also to make translating your map possible (and easy)
+
+To create localized strings in english, go in your map's folder then `english\localizedstrings`. Create any missing folder.  
+In there create a file with the `.str` file extension, you can just use your [mapname](#glossary) as the file name.  
+Open that file with a text editor such as Visual Studio Code or the Notepad.  
+Copy paste the block below in it. You can edit the FILENOTES line.  
+Each entry has REFERENCE for the name and LANG_`LANGUAGE` for the language, followed by the string/the value.  
+
+```c
+FILENOTES    "CREATED BY RESXT"
+
+
+
+REFERENCE           EXAMPLE_HINTSTRING
+LANG_ENGLISH        "Hold ^8[{+activate}] ^7to ^8debug"
+
+
+
+ENDMARKER
+```
+
+You need to have your localizedstrings available in all languages (and build your map in all languages) to support them all.  
+For development purpose, you can just create everything in your game's language and copy paste it in all languages before releasing your map.  
+[Hermes](https://github.com/Rayjiun/Hermes) should automate that process but I haven't used it yet so I can't give more information on it for now.  
+
+If you named your `.str` file `zm_resxt_minecraft` you would refer to `EXAMPLE_HINTSTRING` as `"ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING"` in your code.  
+To convert `"ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING"` to `"Hold ^8[{+activate}] ^7to ^8debug"` you would add a `&` before `"ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING"`.  
+There are other, more advanced/specific ways to use localizedstrings such as the `istring` and `makelocalizedstring` functions but I won't detail them here.  
+
+You can also use localizedstrings on triggers to have them display your text right away without doing it through script.  
+You would edit the `hintstring` KVP and add the full reference to your localizedstring, so in my example this would be `ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING`
+
+I tried to explain it the best I could, if anything is unclear or if you're looking for the full list of languages, I recommend reading the [guide on t7wiki](https://www.t7wiki.com/guides/how-to-use-localization.md).  
+If you still don't understand something, feel free to ask on one of the Discord servers shared at the [top of this page](#what-is-this).
+
+## Precaching
+
+Precaching allows you to cache certain things like localizedstrings and models to get better stability overall.  
+When not precached an hintstring would make the player's game have a short lag/freeze (hitch) when first seeing it.  
+When not precached a model spawned through script (that's not on the map in Radiant) would flicker/bug the first time it's spawned.  
+Precaching solves these issues by caching the localizedstrings/models etc. before the game starts so the player can play the game without these unexpected things happening.  
+
+To precache something you would add a `#precache` line in your script.  
+You can add them below the `#using` lines for example.  
+
+Precaching a hintstring (triggerstring) and a model would look like the example below.  
+See [Localized strings](#localized-strings) for explanations on turning your strings to localizedstrings to be able to precache them.  
+
+```c
+#precache("triggerstring", "ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING");
+#precache("model", "_mc_block_lever_on");
+```
+
+## Glossary
+
+- `Mapname`: refers to your map's code name. This is the name of the folder of your map in the `usermaps` folder
+- `Mapname GSC / Mapname CSC`: refers to your map's main GSC/CSC script. If your map is `zm_resxt_minecraft` then it should be `zm_resxt_minecraft.gsc` (or .csc) in `YOUR_MAPNAME/scripts/zm`
+- `GSH file`: refers to a file with the `.gsh` file extension. This is used to declare values such as strings to then use them in scripts. GSH files are added in script with `#insert`

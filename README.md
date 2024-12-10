@@ -137,6 +137,60 @@ See [Localized strings](#localized-strings) for explanations on turning your str
 #precache("model", "_mc_block_lever_on");
 ```
 
+## Namespaces & external function calls
+
+A namespace is the name other scripts will use to refer to a function located in that script.  
+It is declared as shown below
+
+```c
+#namespace resxt_utils;
+```
+
+When trying to use a function that's located in another script (an external function call), you would use the `NAMESPACE::FUNCTION` syntax, as shown in the example below
+
+```c
+if (resxt_utils::ChanceFromPercentage(80))
+{
+    // some code that runs when the condition is true, since this function returns a boolean
+}
+
+if (!resxt_utils::ChanceFromPercentage(80))
+{
+    // some code that runs when the condition is false, since this function returns a boolean and I added a ! before it, just like I would with a regular function
+}
+```
+
+## Function pointers
+
+Function pointers are used to store a reference to a function without calling it right away.  
+In this example I first store the `OnChallengeCompleted` function in a variable, just like you would store a string for example. It doesn't run the function
+
+```c
+level.challenges_any_completed_func = &OnChallengeCompleted;
+```
+
+Then later on in my code I can call the function using this syntax.  
+This will then run the function like it would normally.  
+
+```c
+[[level.challenges_any_completed_func]]();
+```
+
+It can be useful to replace some of the game's default behaviors or add behaviors to some scenarios, like when a player connects.  
+
+```c
+callback::on_connect(&OnPlayerConnected);
+
+function OnPlayerConnected()
+{
+    // code that runs when a player connects
+}
+```
+
+Function pointers can also be used for more advanced scripting like when you have a core script that holds some generic logic, such as handling challenges, where you can then implement challenges in other file(s).  
+The core challenges script would then be able to call any function you pass it (thanks to pointers that store the function) without having to do specific code for each challenge.  
+The core challenges script only does generic challenges things you expect it to do while a shootables challenge script does what's specific to the shootables challenge and gives its starting function to the core challenges script that will run it whenever it's time to run that specific challenge.  
+
 ## Glossary
 
 - `Mapname`: refers to your map's code name. This is the name of the folder of your map in the `usermaps` folder

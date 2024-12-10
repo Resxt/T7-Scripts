@@ -10,7 +10,7 @@ I also included some tutorials/explanations for some concepts such as the zone f
 
 Huge thanks to everyone who helped me learn GSC originally for other CODs: Birchy, DoktorSAS, FutureRave among others.  
 Also a massive thanks to everyone that made me learn a ton of things on BO3: serious, Rayjiun, Vertasea, Shidouri, Scworppy among others.  
-And last thanks to the [Black Ops 3 Mod Tools](https://discord.com/invite/black-ops-3-mod-tools-230615005194616834) and the [DEVRAW](https://discord.com/invite/6d9swZmKpa) Discord servers and their community for helping me learn all the time!
+And last, thanks to the [Black Ops 3 Mod Tools](https://discord.com/invite/black-ops-3-mod-tools-230615005194616834) and the [DEVRAW](https://discord.com/invite/6d9swZmKpa) Discord servers and their community for helping me learn all the time!
 
 ## How do I download a script?
 
@@ -25,6 +25,10 @@ If a script is updated after you downloaded this repository and you want the new
 - Drag and drop the file(s) you want in the folder they need to be placed in.  
 
 The instructions to install and use these scripts are on their respective page on this repository
+
+Note that scripts installed in your map's folder will always be loaded in priority, instead of the scripts in `Call of Duty Black Ops III\share\raw\scripts` if you happen to install them in both locations.  
+For this reason I recommend installing the scripts in `share\raw\scripts` so that they're always re-usable for your other maps, untouched.  
+This way you can also make a copy of the script and place it into your map's scripts folder to edit it for your map specific behavior while leaving the global script untouched for the other maps that use it.  
 
 As always when you use a script, asset or anything that's not yours, don't forget to credit the people that made it
 
@@ -54,6 +58,21 @@ You can then start using them in GSC/CSC by adding `#using` lines for GSC and CS
 The same principle applies for a lot of other things such as models.  
 If a model is in your map already, in Radiant, then it's loaded.  
 If it's not and you want to use that model through script then you need to add it to the zone file.  
+
+Here are some examples of how you can add things to your zone file
+
+```c
+scriptparsetree,scripts/zm/zm_resxt_minecraft.gsc // GSC script
+scriptparsetree,scripts/zm/zm_resxt_minecraft.csc // CSC script
+scriptparsetree,scripts/zm/zm_resxt_minecraft.gsh // GSH file
+
+xmodel,_mc_item_iron_ingot // Model that's not placed in Radiant
+material,_mc_hud_item_iron_ingot // Material
+
+include,resxt_minecraft_perks // ZPKG file, this is basically another zone file that you can include within a zone file
+
+sound,zm_resxt_minecraft // SZC file
+```
 
 To access your map's zone file you can do one of these:
 
@@ -101,9 +120,11 @@ If you still don't understand something, feel free to ask on one of the Discord 
 ## Precaching
 
 Precaching allows you to cache certain things like localizedstrings and models to get better stability overall.  
-When not precached an hintstring would make the player's game have a short lag/freeze (hitch) when first seeing it.  
-When not precached a model spawned through script (that's not on the map in Radiant) would flicker/bug the first time it's spawned.  
+When not precached, an hintstring would make the player's game have a short lag/freeze (hitch) when first seeing it.  
+When not precached, a model spawned through script (that's not on the map in Radiant) would flicker/have a temporary visual bug the first time it's spawned.  
 Precaching solves these issues by caching the localizedstrings/models etc. before the game starts so the player can play the game without these unexpected things happening.  
+Note that (seemingly) the engine has a bug that makes you still have this lag the very first time you see an hintstring that has a newline character `\n` even if it's precached.  
+From what I know, cannot be fixed and is only for the first hintstring you see with this newline character so it's not a big issue.
 
 To precache something you would add a `#precache` line in your script.  
 You can add them below the `#using` lines for example.  

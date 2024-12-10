@@ -11,14 +11,14 @@ Create any missing folder
 In your [zone file](../README.md#zone-file) add this line
 
 ```c
-scriptparsetree,scripts/zm/_resxt/_utils_.gsc
+scriptparsetree,scripts/zm/_resxt/_utils.gsc
 ```
 
 If you were required to add this util for one of my scripts then you don't have to follow the instructions below.  
 On the other hand, if you want to use some functions for your own scripts then in your script add this line
 
 ```c
-#using scripts\zm\_resxt\_utils_;
+#using scripts\zm\_resxt\_utils;
 ```
 
 ## Script setup

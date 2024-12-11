@@ -1,3 +1,17 @@
+/*
+=========================================================================
+|                                Ending                                 |
+=========================================================================
+| Game: Black Ops III                                                   |
+|                                                                       |
+| Description: A customizable ending/buyable ending                     |
+|                                                                       |
+| Author: Resxt                                                         |
+| Version: 1.0.0                                                        |
+| Link: https://github.com/Resxt/T7-Scripts/tree/main/ending            |
+=========================================================================
+*/
+
 #insert scripts\shared\shared.gsh;
 #insert scripts\zm\_resxt\_ending.gsh;
 

@@ -5,12 +5,13 @@
 | Game: Black Ops III                                                   |
 |                                                                       |
 | Description: A collection of useful functions                         |
-| Link: https://github.com/Resxt/T7-Scripts/tree/main/utils             |
 |                                                                       |
 | Author: Resxt                                                         |
 | Version: 1.0.0                                                        |
+| Link: https://github.com/Resxt/T7-Scripts/tree/main/utils             |
 =========================================================================
 */
+
 #using scripts\shared\array_shared;
 #using scripts\shared\util_shared;
 
@@ -62,6 +63,23 @@ function CallFunction(data)
 		{
 			util::single_func(data.entity, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
 		}
+	}
+}
+
+function IsExplosiveMod(mod)
+{
+	switch (mod)
+	{
+		case "MOD_GRENADE":
+		case "MOD_GRENADE_SPLASH":
+		case "MOD_EXPLOSIVE":
+		case "MOD_EXPLOSIVE_SPLASH":
+		//case "MOD_PROJECTILE":
+		case "MOD_PROJECTILE_SPLASH":
+			return true;
+
+		default:
+			return false;
 	}
 }
 

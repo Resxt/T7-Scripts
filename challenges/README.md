@@ -39,7 +39,8 @@ Open the [GSH file](../README.md#glossary), review and edit the values.
 Make sure to read [Customization](#customization) to not misconfigure anything.  
 
 As explained before, this script does not do anything on its own, you need to add some of my challenges or implement your own.  
-To add challenges you would do something like the example shown below.  
+
+To add challenges you would add something like the example shown below in your mapname GSC.  
 The name of the challenge is the array key you pass to `level.challenges`, so in this example it's `paintings_shootable`.  
 Note that you can use the same function for different challenges if your code is written properly, as long as the challenges names are unique.  
 For example you can have multiple shootables challenges, with different names, that have different targets and they will both work.  

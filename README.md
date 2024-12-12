@@ -187,6 +187,9 @@ function OnPlayerConnected()
 }
 ```
 
+You might also run into [util::new_func](https://github.com/shiversoftdev/t7-source/blob/main/scripts/shared/util_shared.gsc#L877) sometimes, this is a function that converts your function pointer and, if you have some, your args, into a struct.  
+This allows developers to make use of function pointers more easily without passing a lot of args each time but rather just getting a single arg, the struct, and parsing the function pointer and the args automatically.  
+
 Function pointers can also be used for more advanced scripting like when you have a core script that holds some generic logic, such as handling challenges, where you can then implement challenges in other file(s).  
 The core challenges script would then be able to call any function you pass it (thanks to pointers that store the function) without having to do specific code for each challenge.  
 The core challenges script only does generic challenges things you expect it to do while a shootables challenge script does what's specific to the shootables challenge and gives its starting function to the core challenges script that will run it whenever it's time to run that specific challenge.  

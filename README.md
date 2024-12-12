@@ -77,7 +77,7 @@ sound,zm_resxt_minecraft // SZC file
 To access your map's zone file you can do one of these:
 
 - Right click on your map in ModTools and click on `Edit Zone file`
-- Go to `Call of Duty Black Ops III\usermaps\YOUR_MAPNAME\zone_source` (replace `YOUR_MAPNAME` with your map's name) and opening the zone file that has your map's name
+- Go to `Call of Duty Black Ops III\usermaps\YOUR_MAPNAME\zone_source` (replace `YOUR_MAPNAME` with your map's name) and open the zone file that has your map's name
 
 ## Localized strings
 

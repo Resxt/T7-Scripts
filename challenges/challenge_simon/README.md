@@ -88,6 +88,10 @@ Just make sure that all targets have a unique `script_int`, that each target has
 After this you can duplicate the on target and follow the same logic explained above for the off target.  
 Just make sure to duplicate and place the off target first so that the on target is above it in the game's layers system, to ensure it registers the shots properly.  
 
+## APE setup
+
+If you use a model/script_model as the target that will be shot then make sure the model has `BulletCollisionLOD` set to `LOD0` so it can have bullets collide with it, allowing it to receive damage.  
+
 ## Customization
 
 Here are the available variables in the GSH that you can edit

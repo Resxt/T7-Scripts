@@ -13,9 +13,11 @@ All these features can easily be customized by editing the GSH file provided
 
 ## Basic setup
 
-**[Important]** this script needs [my utils](../../utils) to work
+**[Important]**
+This script needs [my utils](../../utils) to work
 
-**[Important]** Like all the challenges I release, this works as a module for the challenges script.  
+**[Important]**
+Like all the challenges I release, this works as a module for the challenges script.  
 Make sure the [core challenges script](../) is installed.  
 
 Drag and drop the files in `Call of Duty Black Ops III\share\raw\scripts\zm\_resxt\challenges`  

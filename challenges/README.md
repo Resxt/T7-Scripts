@@ -14,7 +14,8 @@ This script does not provide any challenge on its own, you need to install at le
 
 ## Basic setup
 
-**[Important]** this script needs [my utils](../utils) to work
+**[Important]**
+This script needs [my utils](../utils) to work
 
 Drag and drop the files in `Call of Duty Black Ops III\share\raw\scripts\zm\_resxt`  
 Create any missing folder

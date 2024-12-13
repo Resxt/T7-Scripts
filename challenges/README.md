@@ -100,6 +100,13 @@ Here are the available variables in the GSH that you can edit
 |---|---|---|---|
 | CHALLENGES_AMOUNT | The amount of challenges to complete until the script considers that players completed all challenges | 0 to let the script set it to the amount of challenges trigger, any int to set a specific number | None |
 
+## Using a script without the challenge system
+
+To use a script outside of my challenge system you will need to edit the code a bit.  
+
+- Remove the using `#using scripts\zm\_resxt\_challenges;`
+- Remove all code that calls the `resxt_challenges` namespace
+
 ## Notes
 
 - This script isn't too customizable for now, it's mostly to fit my needs and some quick additions I did to allow for some more ways of using it.  

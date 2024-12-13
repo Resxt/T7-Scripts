@@ -3,6 +3,8 @@
 A customizable [simon game](https://en.wikipedia.org/wiki/Simon_(game)), as a challenge.  
 If you want to use it outside of my challenges system you can refer to [Using a script without the challenge system](../README.md#using-a-script-without-the-challenge-system).  
 
+https://github.com/user-attachments/assets/eb860cc0-9153-4f03-9df4-92591dfec18c
+
 ## Features
 
 All these features can easily be customized by editing the GSH file provided

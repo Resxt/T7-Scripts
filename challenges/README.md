@@ -89,7 +89,7 @@ function OnAllChallengesCompleted(points)
 Create a `trigger_use` or `trigger_use_touch` and give it the targetname of `challenges_trigger`.  
 
 Click on `Add KVP`, set `Property / Key` to `script_noteworthy` and `Value` to the name(s) of the challenge(s) you want.  
-The name of a challenge is how you called it in when adding it in your mapname GSC. See [Script setup](#script-setup)
+The name of a challenge is how you called it in when adding it in your mapname GSC. See [Script setup](#script-setup).  
 Several challenges on a single trigger would make the script pick one randomly each game and remove the other one from the list of available challenges.  
 The syntax for adding several challenges is separating each with a comma, without any space, as shown in this example `snowmen_shootable,paintings_shootable`
 
@@ -106,7 +106,7 @@ Here are the available variables in the GSH that you can edit
 To use a script outside of my challenge system you will need to edit the code a bit.  
 
 - Remove the using `#using scripts\zm\_resxt\_challenges;`
-- Remove all code that calls the `resxt_challenges` namespace
+- Remove all code that calls the `resxt_challenges` [namespace](../README.md#namespaces--external-function-calls)
 
 ## Notes
 

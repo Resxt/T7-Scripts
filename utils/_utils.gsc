@@ -14,6 +14,13 @@
 
 #using scripts\shared\array_shared;
 #using scripts\shared\util_shared;
+#using scripts\shared\callbacks_shared;
+#using scripts\shared\flag_shared;
+
+#using scripts\shared\ai\zombie_utility;
+
+#using scripts\zm\_zm_spawner;
+#using scripts\zm\_zm_laststand;
 
 
 
@@ -37,31 +44,26 @@ function ArrayFilterScriptNoteworthy(entity, targetString)
 // Allows for choosing whether you need the function threaded or not, the entity to call the function on, including arrays, and turns a data struct into args
 function CallFunction(data)
 {
-	if (!IsDefined(data.entity))
-	{
-		data.entity = self;
-	}
-	
 	if (!IsDefined(data.should_thread) || data.should_thread)
 	{
-		if (IsArray(data.entity))
+		if (IsArray(self))
 		{
-			array::thread_all(data.entity, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
+			array::thread_all(self, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
 		}
 		else
 		{
-			util::single_thread(data.entity, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
+			util::single_thread(self, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
 		}
 	}
 	else
 	{
-		if (IsArray(data.entity))
+		if (IsArray(self))
 		{
-			array::run_all(data.entity, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
+			array::run_all(self, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
 		}
 		else
 		{
-			util::single_func(data.entity, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
+			util::single_func(self, data.func, data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6);
 		}
 	}
 }
@@ -81,6 +83,85 @@ function IsExplosiveMod(mod)
 		default:
 			return false;
 	}
+}
+
+function ParseCsvValue(value, type = "string", defaultNum = undefined)
+{
+	switch(type)
+	{
+		case "int":
+		return (value == "" ? (defaultNum == undefined ? undefined : int(defaultNum)) : int(value));
+
+		case "int_array":
+		if (value == "")
+		{
+			return undefined;
+		}
+		else
+		{
+			values = [];
+
+			foreach (num in StrTok(value, ":"))
+			{
+				array::add(values, int(num));
+			}
+
+			return values;
+		}
+
+		case "string_array":
+		return (value == "" ? undefined : StrTok(value, ":"));
+
+
+		default:
+		return (value == "" ? undefined : value);
+	}
+	
+	return undefined;
+}
+
+
+
+/* Snippets section */
+
+function FakeKillZombies(limit = 0)
+{
+	a_ai = GetAITeamArray("axis");
+
+    foreach(e_ai in a_ai)
+    {
+		if (zombie_utility::get_current_zombie_count() <= limit)
+		{
+			break;
+		}
+
+        e_ai.marked_for_death = false; // don't kill
+        e_ai.marked_for_recycle = true; // do recycle
+
+        wait .05;
+
+        if(IsAlive(e_ai)) e_ai Kill();
+    }
+}
+
+function PlayFXAndDelete(fx, duration, startOrigin, destinationOrigin, sound)
+{
+	fxEntity = Spawn("script_model", startOrigin);
+	fxEntity SetModel("tag_origin");
+	fxEntity NotSolid();
+
+	PlayFXOnTag(fx, fxEntity, "tag_origin");
+
+	if (IsDefined(sound))
+	{
+		fxEntity PlaySound(sound);
+	}
+
+	fxEntity MoveTo(destinationOrigin, duration);
+
+	wait duration;
+
+	fxEntity Delete();
 }
 
 
@@ -148,6 +229,49 @@ function TeleportPlayer(landingStructs, setAngles = true)
 		}
 
 		wait 0.05;
+	}
+}
+
+function EnableAutoSelfRevives()
+{
+	level.auto_self_revives_used = 0;
+	level.no_end_game_check = true;
+
+	foreach (player in GetPlayers())
+	{
+		player thread AutoSelfRevives();
+	}
+
+	callback::on_spawned(&AutoSelfRevives);
+}
+
+function DisableAutoSelfRevives()
+{
+	level.auto_self_revives_used = undefined;
+	level.no_end_game_check = false;
+
+	foreach (player in GetPlayers())
+	{
+		player notify("stop_auto_revives");
+	}
+
+	callback::remove_on_spawned(&AutoSelfRevives);
+}
+
+function private AutoSelfRevives()
+{
+	self endon("death");
+	self endon("stop_auto_revives");
+
+	for(;;)
+	{
+		self waittill("entering_last_stand");
+		
+		wait 0.05;
+
+		level notify("auto_self_revives_used");
+		level.auto_self_revives_used++;
+		self zm_laststand::auto_revive(self);
 	}
 }
 

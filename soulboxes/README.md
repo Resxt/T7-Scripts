@@ -2,6 +2,8 @@
 
 A customizable soulboxes script
 
+https://github.com/user-attachments/assets/17bbe737-8034-4684-ba90-f10e8c1e1464
+
 ## Features
 
 All these features can easily be customized by editing the GSH file provided

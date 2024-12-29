@@ -6,7 +6,7 @@ https://github.com/user-attachments/assets/17bbe737-8034-4684-ba90-f10e8c1e1464
 
 ## Features
 
-All these features can easily be customized by editing the GSH file provided
+All these features can easily be customized
 
 - Built-in way to run your own function when any soulbox is filled and/or when all of them are filled
 - Easily configure things such as model, sounds and fx through a GSH file

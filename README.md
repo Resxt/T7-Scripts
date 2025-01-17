@@ -103,13 +103,20 @@ LANG_ENGLISH        "Hold ^8[{+activate}] ^7to ^8debug"
 ENDMARKER
 ```
 
-You need to have your localizedstrings available in all languages (and build your map in all languages) to support them all.  
-For development purpose, you can just create everything in your game's language and copy paste it in all languages before releasing your map.  
-[Hermes](https://github.com/Rayjiun/Hermes) should automate that process but I haven't used it yet so I can't give more information on it for now.  
-
 If you named your `.str` file `zm_resxt_minecraft` you would refer to `EXAMPLE_HINTSTRING` as `"ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING"` in your code.  
 To convert `"ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING"` to `"Hold ^8[{+activate}] ^7to ^8debug"` you would add a `&` before `"ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING"`.  
 There are other, more advanced/specific ways to use localizedstrings such as the `istring` and `makelocalizedstring` functions but I won't detail them here.  
+
+Add the `.str` file to your [zone file](#zone-file).  
+Replace `STR_FILE_NAME` with your .str file name. In my example this would be `zm_resxt_minecraft`.  
+
+```c
+localize,STR_FILE_NAME
+```
+
+You need to have your localizedstrings available in all languages (and build your map in all languages) to support them all.  
+For development purpose, you can just create everything in your game's language and copy paste it in all languages before releasing your map.  
+[Hermes](https://github.com/Rayjiun/Hermes) should automate that process but I haven't used it yet so I can't give more information on it for now.  
 
 You can also use localizedstrings on triggers to have them display your text right away without doing it through script.  
 You would edit the `hintstring` KVP and add the full reference to your localizedstring, so in my example this would be `ZM_RESXT_MINECRAFT_EXAMPLE_HINTSTRING`
